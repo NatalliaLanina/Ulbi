@@ -15,7 +15,7 @@ function App() {
       <button onClick={increment}>increment</button>
       <button onClick={decrement}>decrement</button>
       <h1>{likes}</h1>
-      <h2>Add text: {value}</h2>
+      <h2>Text: {value}</h2>
       <input
         type="text"
         value={value}
