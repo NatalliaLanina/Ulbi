@@ -1,0 +1,8 @@
+.myBtn {
+    padding: .5em 1.5em;
+    font-weight: bolder;
+    color: #ffffff;
+    background-color: #008d8d;
+    border: none;
+    border-radius: 5px;
+}
