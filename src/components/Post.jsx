@@ -6,7 +6,7 @@ const Post = (props) => {
     <div>
       <div className="post">
         <div className="post__content">
-          <strong>{props.post.id}. {props.post.title.toUpperCase()}</strong>
+          <strong>{props.post.title.toUpperCase()}</strong>
           <p>{props.post.body}</p>
         </div>
         <div className="post__btn">
