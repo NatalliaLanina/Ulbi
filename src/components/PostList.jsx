@@ -7,7 +7,7 @@ const PostList = (props) => {
       <h1>{props.title}</h1>
 
       {props.posts.map(post =>
-        <Post post={post} key={post.id}/>
+        <Post remove={props.removePost} post={post} key={post.id}/>
       )}
     </div>
   );
