@@ -6,9 +6,9 @@ import MySelect from "./components/UI/select/MySelect";
 
 function App() {
   const [posts, setPosts] = useState([
-    {id: 1, title: 'js 1', body: 'description 1'},
-    {id: 2, title: 'js 2', body: 'description 2'},
-    {id: 3, title: 'js 3', body: 'description 3'},
+    {id: 1, title: 'aaa', body: 'anna'},
+    {id: 2, title: 'vvv', body: 'natallia'},
+    {id: 3, title: 'ccc', body: 'bobo'},
   ])
   const [selectedSort, setSelectedSort] = useState('')
 
@@ -18,6 +18,10 @@ function App() {
   const removePost = (post) => {
     setPosts(posts.filter(p => p.id !== post.id))
   }
+  const sortPosts = (sort) => {
+    setSelectedSort(sort);
+    setPosts([...posts].sort((a,b) => a[sort].localeCompare(b[sort])))
+  }
 
   return (
     <div className="app">
@@ -25,7 +29,7 @@ function App() {
       <div>
         <MySelect
           value={selectedSort}
-          onChange={sort => setSelectedSort(sort)}
+          onChange={sortPosts}
           defaultValue='Sort by'
           options={[
             {value: 'title', name: 'By name'},
