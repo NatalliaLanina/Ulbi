@@ -2,29 +2,29 @@ import React, {useMemo, useState} from "react";
 import '../src/styles/App.css';
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
-import MySelect from "./components/UI/select/MySelect";
-import MyInput from "./components/UI/input/MyInput";
+import PostFilter from "./components/PostFilter";
 
 function App() {
   const [posts, setPosts] = useState([
     {id: 1, title: 'aaa', body: 'anna'},
     {id: 2, title: 'vvv', body: 'natallia'},
     {id: 3, title: 'ccc', body: 'bob'},
+    {id: 4, title: 'ddd', body: 'lena'},
+    {id: 5, title: 'sss', body: 'mila'},
   ]);
-  const [selectedSort, setSelectedSort] = useState('');
-  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState({sort: '', query: ''});
 
   const sortedPosts = useMemo(() => {
-    if (selectedSort) {
-      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]))
+    if (filter.sort) {
+      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
     }
     return posts;
-  }, [selectedSort, posts]);
+  }, [filter.sort, posts]);
 
 
   const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPosts.filter(post => post.title.includes(search))
-  }, [search, sortedPosts])
+    return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query))
+  }, [filter.query, sortedPosts])
 
 
   const createPost = (newPost) => {
@@ -33,32 +33,12 @@ function App() {
   const removePost = (post) => {
     setPosts(posts.filter(p => p.id !== post.id))
   }
-  const sortPosts = (sort) => {
-    setSelectedSort(sort);
-  }
 
   return (
     <div className="app">
       <PostForm create={createPost}/>
-      <MyInput
-        value={search}
-        onChange={event => setSearch(event.target.value)}
-        placeholder='Search'
-      />
-      <div>
-        <MySelect
-          value={selectedSort}
-          onChange={sortPosts}
-          defaultValue='Sort by'
-          options={[
-            {value: 'title', name: 'By name'},
-            {value: 'body', name: 'By description'}
-          ]}
-        />
-      </div>
-      {posts.length
-        ? <PostList removePost={removePost} posts={sortedAndSearchedPosts} title={'Post list 1'} key={posts.id}/>
-        : <h2>No posts</h2>}
+      <PostFilter filter={filter} setFilter={setFilter}/>
+      <PostList removePost={removePost} posts={sortedAndSearchedPosts} title={'Post list 1'} key={posts.id}/>
     </div>
   );
 }
