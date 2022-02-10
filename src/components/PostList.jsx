@@ -12,11 +12,7 @@ const PostList = (props) => {
       <h1>{props.title}</h1>
       <TransitionGroup>
         {props.posts.map(post =>
-          <CSSTransition
-            key={post.id}
-            timeout={500}
-            classNames='post'
-          >
+          <CSSTransition key={post.id} timeout={500} classNames='post'>
             <Post remove={props.removePost} post={post}/>
           </CSSTransition>
         )}
