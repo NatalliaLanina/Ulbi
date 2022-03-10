@@ -8,13 +8,17 @@ import MyButton from "./components/UI/button/MyButton";
 import {usePosts} from "./hooks/usePosts";
 import PostService from "./API/PostService";
 import Loader from "./components/UI/loader/Loader";
+import {useFetching} from "./hooks/useFetching";
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({sort: '', query: ''});
   const [modal, setModal] = useState(false);
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
-  const [isPostsLoading, setIsPostsLoading] = useState(false);
+  const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
+    const posts = await PostService.getAll()
+    setPosts(posts);
+  })
 
   useEffect(() => {
     fetchPosts();
@@ -27,12 +31,7 @@ function App() {
   const removePost = (post) => {
     setPosts(posts.filter(p => p.id !== post.id))
   };
-  const fetchPosts = async () => {
-    setIsPostsLoading(true);
-    const posts = await PostService.getAll()
-    setPosts(posts);
-    setIsPostsLoading(false);
-  }
+
 
   return (
     <div className="app">
